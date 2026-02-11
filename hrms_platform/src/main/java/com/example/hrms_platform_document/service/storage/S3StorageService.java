@@ -10,7 +10,15 @@ import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.CopyObjectRequest;
 import software.amazon.awssdk.services.s3.model.DeleteObjectRequest;
 import software.amazon.awssdk.services.s3.model.GetObjectRequest;
+<<<<<<< HEAD
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
+=======
+import software.amazon.awssdk.services.s3.model.HeadObjectRequest;
+import software.amazon.awssdk.services.s3.model.ListObjectsV2Request;
+import software.amazon.awssdk.services.s3.model.ListObjectsV2Response;
+import software.amazon.awssdk.services.s3.model.PutObjectRequest;
+import software.amazon.awssdk.services.s3.model.S3Object;
+>>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
 import software.amazon.awssdk.services.s3.presigner.S3Presigner;
 import software.amazon.awssdk.services.s3.presigner.model.GetObjectPresignRequest;
 
@@ -131,4 +139,46 @@ public class S3StorageService implements StorageService {
             );
         }
     }
+<<<<<<< HEAD
+=======
+
+    @Override
+    public boolean exists(String key) {
+        try {
+            HeadObjectRequest request = HeadObjectRequest.builder()
+                    .bucket(bucket)
+                    .key(key)
+                    .build();
+            s3Client.headObject(request);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    @Override
+    public String findLatestKey(String prefix) {
+        String continuation = null;
+        S3Object latest = null;
+
+        do {
+            ListObjectsV2Request request = ListObjectsV2Request.builder()
+                    .bucket(bucket)
+                    .prefix(prefix)
+                    .continuationToken(continuation)
+                    .build();
+            ListObjectsV2Response response = s3Client.listObjectsV2(request);
+
+            for (S3Object obj : response.contents()) {
+                if (latest == null || obj.lastModified().isAfter(latest.lastModified())) {
+                    latest = obj;
+                }
+            }
+
+            continuation = response.isTruncated() ? response.nextContinuationToken() : null;
+        } while (continuation != null);
+
+        return latest != null ? latest.key() : null;
+    }
+>>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
 }

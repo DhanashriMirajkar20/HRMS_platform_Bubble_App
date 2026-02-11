@@ -1,21 +1,35 @@
 package com.example.EmployeeManagement.Model;
 
+<<<<<<< HEAD
 import com.example.EmployeeManagement.audit.entity.AuditableEntity;
+=======
+>>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
+<<<<<<< HEAD
 import lombok.*;
+=======
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+>>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 
+<<<<<<< HEAD
+=======
+@Data
+>>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "employee_personal")
+<<<<<<< HEAD
 @Getter
 @Setter
 @EqualsAndHashCode(
@@ -28,6 +42,13 @@ public class EmployeePersonal extends AuditableEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
+=======
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "personalId")
+
+public class EmployeePersonal {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+>>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
     private Long personalId;
 
 //    private Long employeeId;     // FK but as plain field

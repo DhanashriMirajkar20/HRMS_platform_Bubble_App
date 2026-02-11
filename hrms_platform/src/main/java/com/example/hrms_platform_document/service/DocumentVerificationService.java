@@ -10,6 +10,10 @@ import com.example.hrms_platform_document.exception.DocumentNotFoundException;
 import com.example.hrms_platform_document.exception.InvalidDocumentStateException;
 import com.example.hrms_platform_document.repository.DocumentRepository;
 import com.example.hrms_platform_document.service.storage.StorageService;
+<<<<<<< HEAD
+=======
+import com.example.security.util.SecurityUtil;
+>>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,15 +23,28 @@ public class DocumentVerificationService {
     private final DocumentRepository documentRepository;
     private final StorageService storageService;
     private final DocumentAuditService auditService;
+<<<<<<< HEAD
+=======
+    private final SecurityUtil securityUtil;
+>>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
 
     public DocumentVerificationService(
             DocumentRepository documentRepository,
             StorageService storageService,
+<<<<<<< HEAD
             DocumentAuditService auditService
+=======
+            DocumentAuditService auditService,
+            SecurityUtil securityUtil
+>>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
     ) {
         this.documentRepository = documentRepository;
         this.storageService = storageService;
         this.auditService = auditService;
+<<<<<<< HEAD
+=======
+        this.securityUtil = securityUtil;
+>>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
     }
 
     /**
@@ -36,12 +53,18 @@ public class DocumentVerificationService {
     @Transactional
     public void verifyDocument(Long documentId, Employee verifier) {
 
+<<<<<<< HEAD
         System.out.println("**************VERIFY START******************");
 
         Document document = documentRepository.findById(documentId)
                 .orElseThrow(() -> new DocumentNotFoundException(documentId));
 
         System.out.println("DOCUMENT FOUND: " + document.getDocumentId());
+=======
+        Document document = documentRepository.findById(documentId)
+                .orElseThrow(() -> new DocumentNotFoundException(documentId));
+
+>>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
 
         if (document.getStatus() != DocumentStatus.PENDING_VERIFICATION) {
             throw new InvalidDocumentStateException(
@@ -49,9 +72,13 @@ public class DocumentVerificationService {
             );
         }
 
+<<<<<<< HEAD
 
         DocumentVersion version = document.getCurrentVersion();
         System.out.println("VERSION OBJECT: " + version);
+=======
+        DocumentVersion version = document.getCurrentVersion();
+>>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
 
         // 1️⃣ Build verified S3 key
         String verifiedKey = buildVerifiedKey(
@@ -60,8 +87,11 @@ public class DocumentVerificationService {
                 version.getVersionNumber()
         );
 
+<<<<<<< HEAD
         System.out.println("TARGET KEY: " + verifiedKey);
 
+=======
+>>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
         // 2️⃣ Move file in S3 (staging → verified)
         storageService.moveToVerified(version.getS3Key(), verifiedKey);
 
@@ -82,8 +112,20 @@ public class DocumentVerificationService {
                 verifier,
                 "Document verified successfully"
         );
+<<<<<<< HEAD
 
         System.out.println("*******************VERIFY END************************");
+=======
+    }
+
+    /**
+     * APPROVE document (logged-in employee)
+     */
+    @Transactional
+    public void verifyDocument(Long documentId) {
+        Employee verifier = securityUtil.getLoggedInEmployee();
+        verifyDocument(documentId, verifier);
+>>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
     }
 
     /**
@@ -119,6 +161,18 @@ public class DocumentVerificationService {
         );
     }
 
+<<<<<<< HEAD
+=======
+    /**
+     * REJECT document (logged-in employee)
+     */
+    @Transactional
+    public void rejectDocument(Long documentId, String reason) {
+        Employee verifier = securityUtil.getLoggedInEmployee();
+        rejectDocument(documentId, verifier, reason);
+    }
+
+>>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
     private String buildVerifiedKey(
             Long employeeId,
             Long documentId,

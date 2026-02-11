@@ -33,5 +33,25 @@ public class DocumentAuditService {
 
         auditRepository.save(audit);
     }
+<<<<<<< HEAD
+=======
+
+    public void deleteByDocumentId(Long documentId) {
+        auditRepository.deleteByDocumentDocumentId(documentId);
+        auditRepository.flush();
+    }
+
+    public String getLatestRemarks(Long documentId) {
+        return auditRepository.findTopByDocumentDocumentIdOrderByPerformedAtDesc(documentId)
+                .map(DocumentAudit::getRemarks)
+                .orElse(null);
+    }
+
+    public String getLatestRemarks(Long documentId, DocumentAuditAction action) {
+        return auditRepository.findTopByDocumentDocumentIdAndActionOrderByPerformedAtDesc(documentId, action)
+                .map(DocumentAudit::getRemarks)
+                .orElse(null);
+    }
+>>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
 }
 

@@ -2,11 +2,16 @@ package com.example.security.util;
 
 import org.springframework.stereotype.Component;
 
+<<<<<<< HEAD
 import java.security.SecureRandom;
+=======
+import java.util.UUID;
+>>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
 
 @Component
 public class PasswordGenerator {
 
+<<<<<<< HEAD
     private static final String UPPER = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     private static final String LOWER = "abcdefghijklmnopqrstuvwxyz";
     private static final String DIGITS = "0123456789";
@@ -50,3 +55,10 @@ public class PasswordGenerator {
         return new String(chars);
     }
 }
+=======
+    public String generateTempPassword() {
+        return "Emp@" + UUID.randomUUID().toString().substring(0, 8);
+    }
+}
+
+>>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b

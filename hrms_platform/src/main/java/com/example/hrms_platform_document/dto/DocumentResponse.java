@@ -15,6 +15,12 @@ public class DocumentResponse {
     private Integer currentVersion;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+<<<<<<< HEAD
+=======
+    private String rejectionReason;
+    private String approvalReason;
+    private String statusMessage;
+>>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
 
     // getters and setters
 }

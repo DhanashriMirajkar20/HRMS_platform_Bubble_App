@@ -1,7 +1,10 @@
 package com.example.EmployeeManagement.Model;
 
 
+<<<<<<< HEAD
 import com.example.EmployeeManagement.audit.entity.AuditableEntity;
+=======
+>>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -15,6 +18,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "employee_band")
+<<<<<<< HEAD
 @Getter
 @Setter
 @NoArgsConstructor
@@ -31,6 +35,18 @@ public class EmployeeBand extends AuditableEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
+=======
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "historyId")
+
+public class EmployeeBand {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+>>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
     private Long historyId;
 
     // FK → employee.employee_id (Phase-1: keep as plain field)
