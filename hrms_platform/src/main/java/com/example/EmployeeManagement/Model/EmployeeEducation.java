@@ -1,6 +1,10 @@
 package com.example.EmployeeManagement.Model;
 
 
+<<<<<<< HEAD
+import com.example.EmployeeManagement.audit.entity.AuditableEntity;
+=======
+>>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -13,6 +17,24 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "employee_education")
+<<<<<<< HEAD
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Getter
+@Setter
+@EqualsAndHashCode(
+        onlyExplicitlyIncluded = true,
+        callSuper = false
+)
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "employeeEducationId")
+
+public class EmployeeEducation extends AuditableEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include
+=======
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,6 +45,7 @@ public class EmployeeEducation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+>>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
     private Long employeeEducationId;   // surrogate PK for JPA
 
     // FK → employee.employee_id (Phase-1 as plain field)

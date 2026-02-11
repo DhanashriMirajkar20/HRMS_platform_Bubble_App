@@ -6,8 +6,11 @@ import com.example.security.dto.RegisterRequest;
 import com.example.security.dto.ResetPasswordRequest;
 import com.example.security.model.Role;
 import com.example.security.model.User;
+<<<<<<< HEAD
+=======
 import com.example.EmployeeManagement.Model.Employee;
 import com.example.EmployeeManagement.Repository.EmployeeRepository;
+>>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
 import com.example.security.repository.RoleRepository;
 import com.example.security.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +18,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+<<<<<<< HEAD
+=======
 import java.time.LocalDate;
+>>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -29,6 +35,14 @@ public class UserService {
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
     private final EmailService emailService;
+<<<<<<< HEAD
+
+    @Transactional
+    public User registerNewUser(RegisterRequest request) {
+
+        if (userRepository.findByUsername(request.getUsername()).isPresent()) {
+            throw new IllegalArgumentException("Username already exists");
+=======
     private final EmployeeRepository employeeRepository;
     private final com.example.security.util.SecurityUtil securityUtil;
     @org.springframework.beans.factory.annotation.Value("${app.frontend.base-url:}")
@@ -44,33 +58,53 @@ public class UserService {
 
         if (userRepository.findByUsernameIgnoreCase(request.getUsername()).isPresent()) {
             throw new IllegalArgumentException("Username is already taken");
+>>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
         }
 
         Role employeeRole = roleRepository
                 .findByName(RoleConstants.ROLE_EMPLOYEE)
                 .orElseThrow(() -> new RuntimeException("ROLE_EMPLOYEE not found"));
 
+<<<<<<< HEAD
+        Long employeeId = userRepository.getNextEmployeeId();
+
+=======
+>>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
         Set<Role> roles = new HashSet<>();
         roles.add(employeeRole);
 
         User user = User.builder()
                 .username(request.getUsername())
                 .password(passwordEncoder.encode(request.getPassword()))
+<<<<<<< HEAD
+                .employeeId(employeeId)
+                .enabled(true)
+                .roles(roles)
+                .mustChangePassword(true)
+=======
                 .employeeId(request.getEmployeeId())
                 .enabled(true)
                 .roles(roles)
                 .mustChangePassword(true)   // 🔐 FORCE FIRST LOGIN CHANGE
+>>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
                 .build();
 
         return userRepository.save(user);
     }
 
+<<<<<<< HEAD
+=======
 
+>>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
     //change password for logged-in users
     @Transactional
     public void changePassword(String username, ChangePasswordRequest request) {
 
+<<<<<<< HEAD
+        User user = userRepository.findByUsername(username)
+=======
         User user = userRepository.findByUsernameIgnoreCase(username)
+>>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
         if (!passwordEncoder.matches(request.getOldPassword(), user.getPassword())) {
@@ -104,7 +138,11 @@ public class UserService {
     @Transactional
     public void generateResetToken(String username) {
 
+<<<<<<< HEAD
+        User user = userRepository.findByUsername(username)
+=======
         User user = userRepository.findByUsernameIgnoreCase(username)
+>>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
         String token = UUID.randomUUID().toString();
@@ -113,16 +151,31 @@ public class UserService {
         user.setResetTokenExpiry(LocalDateTime.now().plusMinutes(15));
         userRepository.save(user);
 
+<<<<<<< HEAD
+        String resetLink =
+                "http://localhost:8080/reset-password?token=" + token;
+=======
         String baseUrl = frontendBaseUrl;
         if (baseUrl == null || baseUrl.isBlank()) {
             baseUrl = "http://localhost:5173";
         }
         String resetLink = baseUrl + "/forgot-password?token=" + token;
+>>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
 
         emailService.sendPasswordResetEmail(
                 user.getUsername(),
                 resetLink
         );
+<<<<<<< HEAD
+    }
+
+    @Transactional
+    public User save(User user) {
+        return userRepository.save(user);
+    }
+
+}
+=======
 
         // Fallback for local testing
         System.out.println("Password reset link: " + resetLink);
@@ -262,3 +315,4 @@ public class UserService {
 
 }
 
+>>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b

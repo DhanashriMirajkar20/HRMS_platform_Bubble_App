@@ -1,5 +1,20 @@
 package com.example.EmployeeManagement.Service;
 
+<<<<<<< HEAD
+import com.example.EmployeeManagement.DTO.EmployeeCreateRequestDTO;
+import com.example.EmployeeManagement.DTO.EmployeeDTO;
+import com.example.EmployeeManagement.Exception.EmployeeNotFoundException;
+import com.example.EmployeeManagement.Model.Employee;
+import com.example.EmployeeManagement.Repository.EmployeeRepository;
+import com.example.security.model.User;
+import com.example.security.repository.UserRepository;
+import com.example.security.util.SecurityUtil;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.List;
+=======
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,12 +46,19 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
+>>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
 
 @Service
 @AllArgsConstructor
 public class EmployeeService {
 
     private EmployeeRepository employeeRepository;
+<<<<<<< HEAD
+    private EmployeeAccessService employeeAccessService;
+    private UserRepository userRepository;
+    private SecurityUtil securityUtil;
+
+=======
 
     private EmployeeAccessService employeeAccessService;
 
@@ -71,6 +93,7 @@ public class EmployeeService {
             new DefaultLeaveType("Paternity Leave", 8, false)
     );
 
+>>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
     public List<EmployeeDTO> getAllEmployee(){
         employeeAccessService.checkHrOrAdmin();
         return employeeRepository.findAll()
@@ -79,6 +102,20 @@ public class EmployeeService {
                 .toList();
     }
 
+<<<<<<< HEAD
+    public EmployeeDTO getEmployeeById(Long employeeId) {
+
+        employeeAccessService.checkOwnerOrHr(employeeId);
+
+        Employee employee = employeeRepository
+                .findByEmployeeId(employeeId)
+                .orElseThrow(() -> new EmployeeNotFoundException(employeeId));
+
+        return mapToDto(employee);
+    }
+
+
+=======
     public EmployeeDTO getEmployeeById(Long id){
 
         employeeAccessService.checkOwnerOrHr(id);
@@ -87,6 +124,7 @@ public class EmployeeService {
         return mapToDto(employee);
     }
 
+>>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
     public List<EmployeeDTO> getEmployeeByName(String name){
         return employeeRepository.searchByFullName(name)
                 .stream()
@@ -94,6 +132,79 @@ public class EmployeeService {
                 .toList();
     }
 
+<<<<<<< HEAD
+    public EmployeeDTO addEmployee(EmployeeCreateRequestDTO request) {
+
+        // 🔐 get logged-in HR/Admin
+        String username = securityUtil.getCurrentUsername();
+
+        User hrUser = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("Logged-in user not found"));
+
+        Employee employee = new Employee();
+
+        // Identity
+        employee.setFirstName(request.getFirstName());
+        employee.setLastName(request.getLastName());
+
+        // Organization
+        employee.setDepartment(request.getDepartment());
+        employee.setDesignation(request.getDesignation());
+        employee.setEmployeeType(request.getEmployeeType());
+
+        // HR details
+        employee.setDateOfJoining(request.getDateOfJoining());
+        employee.setCurrentBand(request.getCurrentBand());
+        employee.setCurrentExperience(
+                request.getCurrentExperience() != null ? request.getCurrentExperience() : 0.0
+        );
+        employee.setCtc(
+                request.getCtc() != null ? request.getCtc() : 0
+        );
+
+        // Contact
+        employee.setPhoneNumber(request.getPhoneNumber());
+
+        // CREATED BY HR
+        employee.setCreatedByHrUserId(hrUser.getEmployeeId());
+
+        // System fields
+        employee.setStatus("ACTIVE");
+        employee.setCreatedAt(LocalDateTime.now());
+        employee.setUpdatedAt(LocalDateTime.now());
+
+        Employee saved = employeeRepository.save(employee);
+
+        return mapToDto(saved);
+    }
+
+
+    public EmployeeDTO updateEmployee(Long id, EmployeeCreateRequestDTO request) {
+
+        Employee existing = employeeRepository.findById(id)
+                .orElseThrow(() -> new EmployeeNotFoundException(id));
+
+        // Update only allowed fields
+        existing.setFirstName(request.getFirstName());
+        existing.setLastName(request.getLastName());
+        existing.setDepartment(request.getDepartment());
+        existing.setDesignation(request.getDesignation());
+        existing.setEmployeeType(request.getEmployeeType());
+        existing.setDateOfJoining(request.getDateOfJoining());
+        existing.setCurrentBand(request.getCurrentBand());
+        existing.setCurrentExperience(
+                request.getCurrentExperience() != null ? request.getCurrentExperience() : existing.getCurrentExperience()
+        );
+        existing.setCtc(
+                request.getCtc() != null ? request.getCtc() : existing.getCtc()
+        );
+        existing.setPhoneNumber(request.getPhoneNumber());
+
+
+
+        // System-managed field
+        existing.setUpdatedAt(LocalDateTime.now());
+=======
     public EmployeeDTO addEmployee(Employee employee){
         ensureHrManagerAssignment(employee);
         Employee employeeSaved =  employeeRepository.save(employee);
@@ -122,11 +233,17 @@ public class EmployeeService {
         }
 
         ensureHrManagerAssignment(existing);
+>>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
 
         Employee saved = employeeRepository.save(existing);
         return mapToDto(saved);
     }
 
+<<<<<<< HEAD
+
+    public void deleteEmployeeById(Long employeeId){
+        employeeRepository.deleteById(employeeId);
+=======
     @Transactional
     public void deleteEmployeeById(Long id) {
         employeeAccessService.checkHrOrAdmin();
@@ -182,6 +299,7 @@ public class EmployeeService {
         userService.deleteByEmployeeId(id);
 
         employeeRepository.deleteById(id);
+>>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
     }
 
 
@@ -194,6 +312,13 @@ public class EmployeeService {
         dto.setDesignation(employee.getDesignation());
         dto.setStatus(employee.getStatus());
         dto.setCurrentBand(employee.getCurrentBand());
+<<<<<<< HEAD
+
+        if(employee.getJobDetails() != null)
+            dto.setDepartment(employee.getJobDetails().getDepartmentName());
+        if(employee.getManager()!=null)
+            dto.setManagerName(employee.getManager().getFirstName()+" "+employee.getManager().getLastName());
+=======
         dto.setDateOfJoining(employee.getDateOfJoining());
         dto.setEmployeeType(employee.getEmployeeType());
         dto.setPhoneNumber(employee.getPhoneNumber());
@@ -211,10 +336,13 @@ public class EmployeeService {
             dto.setManagerName(employee.getManager().getFirstName()+" "+employee.getManager().getLastName());
         if (employee.getManager() != null)
             dto.setManagerId(employee.getManager().getEmployeeId());
+>>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
 
         return dto;
     }
 
+<<<<<<< HEAD
+=======
     private void initializeLeaveBalances(Employee employee) {
         if (employee == null) {
             return;
@@ -281,6 +409,7 @@ public class EmployeeService {
         }
     }
 
+>>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
     public List<EmployeeDTO> getEmployeesUnderManager(Long managerId) {
 
         // HR can view anyone, EMPLOYEE only their own subordinates
@@ -291,6 +420,46 @@ public class EmployeeService {
                 .map(this::mapToDto)
                 .toList();
     }
+<<<<<<< HEAD
+    public Employee toEntity(EmployeeCreateRequestDTO dto, Long hrUserId) {
+
+        Employee e = new Employee();
+
+        e.setFirstName(dto.getFirstName());
+        e.setLastName(dto.getLastName());
+        e.setDepartment(dto.getDepartment());
+        e.setDesignation(dto.getDesignation());
+        e.setEmployeeType(dto.getEmployeeType());
+        e.setDateOfJoining(dto.getDateOfJoining());
+        e.setPhoneNumber(dto.getPhoneNumber());
+
+        // NULL-SAFE DEFAULTS
+        e.setCurrentExperience(
+                dto.getCurrentExperience() != null ? dto.getCurrentExperience() : 0.0
+        );
+
+        e.setCtc(
+                dto.getCtc() != null ? dto.getCtc() : 0
+        );
+
+        e.setCurrentBand(dto.getCurrentBand());
+        e.setStatus("ACTIVE");
+
+        // Audit
+        e.setCreatedByHrUserId(hrUserId);
+
+        return e;
+    }
+
+
+
+    public Employee addEmployeeInternal(Employee employee) {
+//        employee.setEmployeeId(null);
+        return employeeRepository.save(employee);
+    }
+
+
+=======
 
     public Employee toEntity(EmployeeDTO dto, Long hrUserId) {
         Employee e = new Employee();
@@ -352,4 +521,5 @@ public class EmployeeService {
 
 
 
+>>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
 }

@@ -1,6 +1,11 @@
 package com.example.EmployeeManagement.Repository;
 
+<<<<<<< HEAD
+//import com.example.EmployeeManagement.Model.AuditLog;
+import com.example.EmployeeManagement.audit.entity.AuditLog;
+=======
 import com.example.EmployeeManagement.Model.AuditLog;
+>>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

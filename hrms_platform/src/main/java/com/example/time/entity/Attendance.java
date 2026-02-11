@@ -37,9 +37,12 @@ public class Attendance {
     private String status; // PRESENT, ABSENT, LATE
 
     private Long shiftId;
+<<<<<<< HEAD
+=======
 
     private Double latitude;
     private Double longitude;
     private String ipAddress;
     private String source; // WEB or GPS
+>>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
 }

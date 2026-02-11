@@ -19,9 +19,12 @@ public class AttendanceDTO {
     private LocalTime checkIn;
     private LocalTime checkOut;
     private String status;
+<<<<<<< HEAD
+=======
     private Double latitude;
     private Double longitude;
     private String ipAddress;
     private String source;
+>>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
 
 }

@@ -5,15 +5,21 @@ import com.example.EmployeeManagement.Repository.EmployeeRepository;
 import com.example.time.entity.Attendance;
 import com.example.time.repository.AttendanceRepository;
 import com.example.time.services.AttendanceService;
+<<<<<<< HEAD
+=======
 import org.springframework.beans.factory.annotation.Value;
+>>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+<<<<<<< HEAD
+=======
 import java.util.ArrayList;
 import java.util.Arrays;
+>>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
 
 @Service
 public class AttendanceServiceImplementation implements AttendanceService {
@@ -24,6 +30,13 @@ public class AttendanceServiceImplementation implements AttendanceService {
     @Autowired
     private EmployeeRepository employeeRepository;
 
+<<<<<<< HEAD
+    @Override
+    public Attendance checkIn(long employeeId) {
+        Employee employee = employeeRepository.findById(employeeId)
+                .orElseThrow(() -> new RuntimeException("Employee not found: " + employeeId));
+
+=======
     @Value("${attendance.allowed-ips:}")
     private String allowedIpsConfig;
 
@@ -49,21 +62,29 @@ public class AttendanceServiceImplementation implements AttendanceService {
         String normalizedSource = (source == null || source.isBlank()) ? "WEB" : source.trim().toUpperCase();
         validateSource(normalizedSource, latitude, longitude, ipAddress);
 
+>>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
         Attendance attendance = new Attendance();
         attendance.setEmployee(employee);
         attendance.setDate(LocalDate.now());
         attendance.setCheckIn(LocalTime.now());
         attendance.setStatus("PRESENT");
+<<<<<<< HEAD
+=======
         attendance.setSource(normalizedSource);
         attendance.setLatitude(latitude);
         attendance.setLongitude(longitude);
         attendance.setIpAddress(ipAddress);
+>>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
 
         return attendanceRepository.save(attendance);
     }
 
     @Override
+<<<<<<< HEAD
+    public Attendance checkOut(long employeeId) {
+=======
     public Attendance checkOut(long employeeId, String source, Double latitude, Double longitude, String ipAddress) {
+>>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
         Employee employee = employeeRepository.findById(employeeId)
                 .orElseThrow(() -> new RuntimeException("Employee not found: " + employeeId));
 
@@ -71,6 +92,9 @@ public class AttendanceServiceImplementation implements AttendanceService {
                 .findByEmployeeAndDate(employee, LocalDate.now())
                 .orElseThrow(() -> new RuntimeException("Check-in not found"));
 
+<<<<<<< HEAD
+        attendance.setCheckOut(LocalTime.now());
+=======
         if (attendance.getCheckOut() != null) {
             throw new RuntimeException("Already checked out for today");
         }
@@ -83,6 +107,7 @@ public class AttendanceServiceImplementation implements AttendanceService {
         attendance.setLatitude(latitude != null ? latitude : attendance.getLatitude());
         attendance.setLongitude(longitude != null ? longitude : attendance.getLongitude());
         attendance.setIpAddress(ipAddress != null ? ipAddress : attendance.getIpAddress());
+>>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
         return attendanceRepository.save(attendance);
     }
 
@@ -92,6 +117,8 @@ public class AttendanceServiceImplementation implements AttendanceService {
                 .orElseThrow(() -> new RuntimeException("Employee not found: " + employeeId));
         return attendanceRepository.findByEmployee(employee);
     }
+<<<<<<< HEAD
+=======
 
     private void validateSource(String source, Double latitude, Double longitude, String ipAddress) {
         if (!"WEB".equals(source)) {
@@ -254,4 +281,5 @@ public class AttendanceServiceImplementation implements AttendanceService {
             this.radiusMeters = radiusMeters;
         }
     }
+>>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
 }

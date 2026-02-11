@@ -3,16 +3,25 @@ package com.example.time.services.Implementation;
 import com.example.EmployeeManagement.Model.Employee;
 import com.example.time.entity.LeaveBalance;
 import com.example.time.entity.LeaveRequest;
+<<<<<<< HEAD
+import com.example.time.repository.LeaveBalanceRepository;
+import com.example.time.repository.LeaveRequestRepository;
+import com.example.time.services.LeaveService;
+=======
 import com.example.time.exception.BadRequestException;
 import com.example.time.repository.LeaveBalanceRepository;
 import com.example.time.repository.LeaveRequestRepository;
 import com.example.time.services.LeaveService;
 import com.example.security.util.SecurityUtil;
+>>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+<<<<<<< HEAD
+=======
 import java.util.List;
+>>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
 
 @Service
 public class LeaveServiceImplementation implements LeaveService {
@@ -23,6 +32,10 @@ public class LeaveServiceImplementation implements LeaveService {
     @Autowired
     private LeaveBalanceRepository leaveBalanceRepository;
 
+<<<<<<< HEAD
+    @Override
+    public LeaveRequest applyLeave(LeaveRequest request) {
+=======
     @Autowired
     private SecurityUtil securityUtil;
 
@@ -39,6 +52,7 @@ public class LeaveServiceImplementation implements LeaveService {
                 throw new BadRequestException("Requested days exceed remaining leave balance.");
             }
         }
+>>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
         request.setStatus("PENDING");
         request.setAppliedOn(LocalDateTime.now());
         return leaveRequestRepository.save(request);
@@ -84,6 +98,8 @@ public class LeaveServiceImplementation implements LeaveService {
         return leaveRequestRepository.save(leaveRequest);
     }
 
+<<<<<<< HEAD
+=======
     @Override
     public LeaveRequest approveLeaveAsHr(Long leaveRequestId, Long approverId) {
 
@@ -118,6 +134,7 @@ public class LeaveServiceImplementation implements LeaveService {
         return leaveRequestRepository.save(leaveRequest);
     }
 
+>>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
 
     @Override
     public LeaveRequest rejectLeave(Long leaveRequestId, Long approverId) {
@@ -143,6 +160,8 @@ public class LeaveServiceImplementation implements LeaveService {
         return leaveRequestRepository.save(leaveRequest);
     }
 
+<<<<<<< HEAD
+=======
     @Override
     public LeaveRequest rejectLeaveAsHr(Long leaveRequestId, Long approverId) {
 
@@ -230,5 +249,6 @@ public class LeaveServiceImplementation implements LeaveService {
         return deptA.trim().equalsIgnoreCase(deptB.trim());
     }
 
+>>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
 
 }

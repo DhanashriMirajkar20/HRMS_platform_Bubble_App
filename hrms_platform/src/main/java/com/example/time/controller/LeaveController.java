@@ -1,6 +1,11 @@
 package com.example.time.controller;
 
 import com.example.EmployeeManagement.Model.Employee;
+<<<<<<< HEAD
+import com.example.time.dto.LeaveRequestDTO;
+import com.example.time.entity.LeaveRequest;
+import com.example.time.mapper.LeaveRequestMapper;
+=======
 import com.example.time.dto.LeaveBalanceDTO;
 import com.example.time.dto.LeaveRequestDTO;
 import com.example.time.entity.LeaveBalance;
@@ -9,16 +14,20 @@ import com.example.time.entity.LeaveType;
 import com.example.time.mapper.LeaveRequestMapper;
 import com.example.time.repository.LeaveBalanceRepository;
 import com.example.time.repository.LeaveTypeRepository;
+>>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
 import com.example.time.services.LeaveService;
 import com.example.security.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+<<<<<<< HEAD
+=======
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+>>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
 @RestController
 @RequestMapping("/api/v1/hrms/time/leaves")
 @RequiredArgsConstructor
@@ -26,8 +35,11 @@ public class LeaveController {
 
     private final LeaveService leaveService;
     private final SecurityUtil securityUtil;
+<<<<<<< HEAD
+=======
     private final LeaveBalanceRepository leaveBalanceRepository;
     private final LeaveTypeRepository leaveTypeRepository;
+>>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
 
     /**
      * APPLY LEAVE
@@ -47,6 +59,19 @@ public class LeaveController {
     }
 
     /**
+<<<<<<< HEAD
+     * APPROVE LEAVE
+     * ONLY employee's CURRENT MANAGER can approve
+     */
+    @PreAuthorize("hasRole('EMPLOYEE')")
+    @PutMapping("/{leaveRequestId}/approve")
+    public LeaveRequestDTO approveLeave(@PathVariable Long leaveRequestId) {
+
+        Employee approver = securityUtil.getLoggedInEmployee();
+
+        LeaveRequest approved =
+                leaveService.approveLeave(leaveRequestId, approver.getEmployeeId());
+=======
      * GET logged-in employee leave balances
      */
     @PreAuthorize("isAuthenticated()")
@@ -93,6 +118,7 @@ public class LeaveController {
         } else {
             approved = leaveService.approveLeave(leaveRequestId, approver.getEmployeeId());
         }
+>>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
 
         return LeaveRequestMapper.toDTO(approved);
     }
@@ -101,6 +127,19 @@ public class LeaveController {
      * REJECT LEAVE
      * ONLY employee's CURRENT MANAGER can reject
      */
+<<<<<<< HEAD
+    @PreAuthorize("hasRole('EMPLOYEE')")
+    @PutMapping("/{leaveRequestId}/reject")
+    public LeaveRequestDTO rejectLeave(@PathVariable Long leaveRequestId) {
+
+        Employee approver = securityUtil.getLoggedInEmployee();
+
+        LeaveRequest rejected =
+                leaveService.rejectLeave(leaveRequestId, approver.getEmployeeId());
+
+        return LeaveRequestMapper.toDTO(rejected);
+    }
+=======
     @PreAuthorize("hasAnyRole('EMPLOYEE','HR_MANAGER','HR','HR_OPERATIONS','HR_BP','HR_PAYROLL','TALENT_ACQUISITION','ADMIN')")
     @PutMapping("/{leaveRequestId}/reject")
     public LeaveRequestDTO rejectLeave(@PathVariable Long leaveRequestId) {
@@ -193,4 +232,5 @@ public class LeaveController {
                 carryForwardAllowed
         );
     }
+>>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
 }
