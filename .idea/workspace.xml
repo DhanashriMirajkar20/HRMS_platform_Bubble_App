@@ -5,9 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b8c04677-5ec0-4006-a044-982a58535b60" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/hrms_platform/src/main/java/com/example/EmployeeManagement/DTO/EmployeeSearchDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hrms_platform/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/hrms_platform/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hrms_platform/src/main/java/com/example/HrmsPlatformApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/hrms_platform/src/main/java/com/example/HrmsPlatformApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hrms_platform/src/main/java/com/example/EmployeeManagement/Model/Employee.java" beforeDir="false" afterPath="$PROJECT_DIR$/hrms_platform/src/main/java/com/example/EmployeeManagement/Model/Employee.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hrms_platform/src/main/java/com/example/EmployeeManagement/Repository/EmployeeRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/hrms_platform/src/main/java/com/example/EmployeeManagement/Repository/EmployeeRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hrms_platform/src/main/java/com/example/EmployeeManagement/Service/EmployeeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/hrms_platform/src/main/java/com/example/EmployeeManagement/Service/EmployeeService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,21 +67,7 @@
     "last_opened_file_path": "C:/Projects/HRMS-Platform-Bubble"
   }
 }]]></component>
-  <component name="RunManager" selected="Spring Boot.HrmsPlatformApplication (1)">
-    <configuration name="HrmsPlatformApplication (1)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
-      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UnknownPolicyInFreeMode" />
-      <module name="hrms-platform" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.HrmsPlatformApplication" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.example.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager">
     <configuration name="HrmsPlatformApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
       <option name="ALTERNATIVE_JRE_PATH" value="ms-21" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
@@ -100,9 +89,29 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="HrmsPlatformApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <option name="envFilePaths">
+        <option value="$PROJECT_DIR$/hrms_platform/.env" />
+      </option>
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UnknownPolicyInFreeMode" />
+      <module name="hrms-platform" />
+      <selectedOptions>
+        <option name="environmentVariables" />
+      </selectedOptions>
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.HrmsPlatformApplication" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Spring Boot.HrmsPlatformApplication (1)" />
+        <item itemvalue="Spring Boot.HrmsPlatformApplication" />
         <item itemvalue="Spring Boot.HrmsPlatformApplication" />
       </list>
     </recent_temporary>

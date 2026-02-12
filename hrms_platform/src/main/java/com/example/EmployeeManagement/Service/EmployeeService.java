@@ -3,6 +3,8 @@ package com.example.EmployeeManagement.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.EmployeeManagement.DTO.EmployeeSearchDTO;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import com.example.EmployeeManagement.DTO.EmployeeDTO;
@@ -30,6 +32,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Objects;
 import java.util.Set;
+import jakarta.persistence.criteria.Predicate;
 import java.util.stream.Collectors;
 
 @Service
@@ -355,6 +358,75 @@ public class EmployeeService {
         return deptA.trim().equalsIgnoreCase(deptB.trim());
     }
 
+    public List<EmployeeSearchDTO> searchEmployees(EmployeeSearchDTO searchDTO) {
 
+        Specification<Employee> specification = (root, query, cb) -> {
+
+            List<Predicate> predicates = new ArrayList<>();
+
+            if (searchDTO.getFirstName() != null) {
+                predicates.add(cb.like(cb.lower(root.get("firstName")),
+                        "%" + searchDTO.getFirstName().toLowerCase() + "%"));
+            }
+
+            if (searchDTO.getLastName() != null) {
+                predicates.add(cb.like(cb.lower(root.get("lastName")),
+                        "%" + searchDTO.getLastName().toLowerCase() + "%"));
+            }
+
+            if (searchDTO.getCompanyEmail() != null) {
+                predicates.add(cb.equal(root.get("companyEmail"),
+                        searchDTO.getCompanyEmail()));
+            }
+
+            if (searchDTO.getDepartment() != null) {
+                predicates.add(cb.equal(root.get("department"),
+                        searchDTO.getDepartment()));
+            }
+
+            if (searchDTO.getDesignation() != null) {
+                predicates.add(cb.equal(root.get("designation"),
+                        searchDTO.getDesignation()));
+            }
+
+            return cb.and(predicates.toArray(new Predicate[0]));
+        };
+
+        List<Employee> employees = employeeRepository.findAll(specification);
+
+        return employees.stream()
+                .map(this::convertToSearchDTO)
+                .toList();
+    }
+
+    private EmployeeSearchDTO convertToSearchDTO(Employee employee) {
+
+        EmployeeSearchDTO dto = new EmployeeSearchDTO();
+
+        dto.setEmployeeId(employee.getEmployeeId());
+        dto.setFirstName(employee.getFirstName());
+        dto.setLastName(employee.getLastName());
+        dto.setCompanyEmail(employee.getCompanyEmail());
+        dto.setDesignation(employee.getDesignation());
+        dto.setDepartment(employee.getDepartment());
+        dto.setCompanyBaseLocation(employee.getCompanyBaseLocation());
+        dto.setBand(employee.getCurrentBand());
+
+        if (employee.getManager() != null) {
+            dto.setManagerName(
+                    employee.getManager().getFirstName() + " " +
+                            employee.getManager().getLastName()
+            );
+
+            EmployeeDTO managerDTO = new EmployeeDTO();
+            managerDTO.setEmployeeId(employee.getManager().getEmployeeId());
+            managerDTO.setFirstName(employee.getManager().getFirstName());
+            managerDTO.setLastName(employee.getManager().getLastName());
+
+            dto.setManager(managerDTO);
+        }
+
+        return dto;
+    }
 
 }

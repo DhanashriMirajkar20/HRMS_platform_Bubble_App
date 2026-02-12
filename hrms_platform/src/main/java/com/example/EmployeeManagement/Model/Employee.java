@@ -35,6 +35,8 @@ public class Employee {
     private String designation;
     private int ctc;
     private String department;
+    private String companyBaseLocation;
+
 
 //    relation yet to establish
     @Column(name = "created_by_hr_user_id", nullable = false)
