@@ -29,13 +29,10 @@ public class EmployeeAccessService {
     private boolean isHrOrAdmin(User user) {
         return user.getRoles().stream().anyMatch(role ->
                 role.getName().equals(RoleConstants.ROLE_HR_OPERATIONS) ||
-<<<<<<< HEAD
-=======
                         role.getName().equals(RoleConstants.ROLE_HR_PAYROLL) ||
                         role.getName().equals(RoleConstants.ROLE_HR_BP) ||
                         role.getName().equals(RoleConstants.ROLE_HR_MANAGER) ||
                         role.getName().equals(RoleConstants.ROLE_TALENT_ACQUISITION) ||
->>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
                         role.getName().equals(RoleConstants.ROLE_ADMIN)
         );
     }
@@ -97,3 +94,4 @@ public class EmployeeAccessService {
         throw new AccessDeniedException("Access denied");
     }
 }
+

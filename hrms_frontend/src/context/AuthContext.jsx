@@ -106,6 +106,38 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const loginWithToken = async (token) => {
+    if (!token) {
+      return { success: false, error: 'Missing token.' };
+    }
+    try {
+      localStorage.setItem('token', token);
+      const profileResponse = await axiosInstance.get(API_ENDPOINTS.AUTH.ME);
+      const profile = profileResponse.data;
+
+      const role = resolveRole(profile.roles);
+      const userData = {
+        username: profile.username,
+        email: profile.username,
+        role,
+        roles: profile.roles,
+        employeeId: profile.employeeId,
+        department: profile.department || profile.departmentName || profile?.employee?.department,
+      };
+
+      localStorage.setItem('user', JSON.stringify(userData));
+      setUser(userData);
+      setIsAuthenticated(true);
+      return { success: true, user: userData };
+    } catch (error) {
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      setUser(null);
+      setIsAuthenticated(false);
+      return { success: false, error: 'OAuth login failed. Please try again.' };
+    }
+  };
+
   const resolveRole = (roles) => {
     if (!roles || !Array.isArray(roles)) return 'EMPLOYEE';
     const r = roles.map((s) => (typeof s === 'string' ? s : s?.name || ''));
@@ -126,6 +158,7 @@ export const AuthProvider = ({ children }) => {
     loading,
     isAuthenticated,
     login,
+    loginWithToken,
     logout,
   };
 

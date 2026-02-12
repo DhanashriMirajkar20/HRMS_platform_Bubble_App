@@ -12,6 +12,8 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Login from "./Authentication/Components/Login";
 import ForgotPassword from "./Authentication/Components/ForgotPassword"; // New Import
 import RequestPasswordReset from "./Authentication/Components/RequestPasswordReset";
+import OAuthRedirect from "./Authentication/Components/OAuthRedirect";
+import OAuthError from "./Authentication/Components/OAuthError";
 
 // Admin Pages
 import AdminDashboard from "./pages/Admin/AdminDashboard";
@@ -66,6 +68,8 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/request-password" element={<RequestPasswordReset />} />
                 <Route path="/forgot-password" element={<ForgotPassword />} />
+                <Route path="/oauth/redirect" element={<OAuthRedirect />} />
+                <Route path="/oauth/error" element={<OAuthError />} />
 
                 {protectedRoutes.map((route) => (
                   <Route

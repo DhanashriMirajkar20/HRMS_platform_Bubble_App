@@ -3,12 +3,6 @@ package com.example.time.controller;
 import com.example.time.dto.AttendanceDTO;
 import com.example.time.mapper.AttendanceMapper;
 import com.example.time.services.AttendanceService;
-<<<<<<< HEAD
-import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
-=======
 import com.example.security.jwt.JwtService;
 import com.example.security.util.SecurityUtil;
 import lombok.AllArgsConstructor;
@@ -18,35 +12,22 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import jakarta.servlet.http.HttpServletRequest;
->>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/hrms/time/attendance")
 @AllArgsConstructor
-<<<<<<< HEAD
-public class AttendanceController {
-
-    private AttendanceService attendanceService;
-=======
 @Slf4j
 public class AttendanceController {
 
     private AttendanceService attendanceService;
     private SecurityUtil securityUtil;
     private JwtService jwtService;
->>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
 
     /**
      * POST /api/v1/hrms/time/attendance/check-in
      */
-<<<<<<< HEAD
-    @PreAuthorize("hasRole('EMPLOYEE') and @securityUtil.isSelf(#employeeId)")
-    @PostMapping("/check-in")
-    public AttendanceDTO checkIn(@RequestParam long employeeId) {
-        return AttendanceMapper.toDTO(attendanceService.checkIn(employeeId));
-=======
     @PreAuthorize("""
         hasAnyRole('EMPLOYEE','HR_OPERATIONS','HR_BP','HR_PAYROLL','TALENT_ACQUISITION','ADMIN')
         and @securityUtil.isSelf(#employeeId)
@@ -77,18 +58,11 @@ public class AttendanceController {
         long employeeId = resolveEmployeeIdForCurrentUser(request);
         String ipAddress = resolveClientIp(request);
         return AttendanceMapper.toDTO(attendanceService.checkIn(employeeId, source, latitude, longitude, ipAddress));
->>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
     }
 
     /**
      * POST /api/v1/hrms/time/attendance/check-out
      */
-<<<<<<< HEAD
-    @PreAuthorize("hasRole('EMPLOYEE') and @securityUtil.isSelf(#employeeId)")
-    @PostMapping("/check-out")
-    public AttendanceDTO checkOut(@RequestParam long employeeId) {
-        return AttendanceMapper.toDTO(attendanceService.checkOut(employeeId));
-=======
     @PreAuthorize("""
         hasAnyRole('EMPLOYEE','HR_OPERATIONS','HR_BP','HR_PAYROLL','TALENT_ACQUISITION','ADMIN')
         and @securityUtil.isSelf(#employeeId)
@@ -119,7 +93,6 @@ public class AttendanceController {
         long employeeId = resolveEmployeeIdForCurrentUser(request);
         String ipAddress = resolveClientIp(request);
         return AttendanceMapper.toDTO(attendanceService.checkOut(employeeId, source, latitude, longitude, ipAddress));
->>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
     }
 
     /**
@@ -137,8 +110,6 @@ public class AttendanceController {
                 .map(AttendanceMapper::toDTO)
                 .toList();
     }
-<<<<<<< HEAD
-=======
 
     /**
      * GET /api/v1/hrms/time/attendance/me
@@ -213,5 +184,5 @@ public class AttendanceController {
         }
         return ip;
     }
->>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
 }
+

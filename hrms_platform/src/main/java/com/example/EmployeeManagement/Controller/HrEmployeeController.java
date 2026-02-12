@@ -1,15 +1,5 @@
 package com.example.EmployeeManagement.Controller;
 
-<<<<<<< HEAD
-import com.example.EmployeeManagement.DTO.EmployeeCreateRequestDTO;
-import com.example.EmployeeManagement.DTO.EmployeeCreateResponse;
-import com.example.EmployeeManagement.DTO.EmployeeDTO;
-import com.example.security.model.User;
-import com.example.security.repository.UserRepository;
-import com.example.security.service.OnboardingService;
-import lombok.RequiredArgsConstructor;
-=======
->>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,8 +8,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-<<<<<<< HEAD
-=======
 import com.example.EmployeeManagement.DTO.EmployeeCreateResponse;
 import com.example.EmployeeManagement.DTO.EmployeeDTO;
 import com.example.EmployeeManagement.Model.Employee;
@@ -34,22 +22,11 @@ import com.example.notifications.service.NotificationService;
 
 import lombok.RequiredArgsConstructor;
 
->>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
 @RestController
 @RequestMapping("/api/v1/hr/employees")
 @RequiredArgsConstructor
 public class HrEmployeeController {
 
-<<<<<<< HEAD
-    private final UserRepository userRepository;
-
-    private final OnboardingService onboardingService;
-
-    @PostMapping
-    @PreAuthorize("hasAuthority('ROLE_HR_OPERATIONS')")
-    public ResponseEntity<EmployeeCreateResponse> createEmployee(
-            @RequestBody EmployeeCreateRequestDTO dto) {
-=======
     private final EmployeeService employeeService;
     private final UserRepository userRepository;
 
@@ -62,7 +39,6 @@ public class HrEmployeeController {
     @PreAuthorize("hasAnyAuthority('ROLE_HR','ROLE_HR_MANAGER','ROLE_HR_OPERATIONS', 'ROLE_HR_PAYROLL', 'ROLE_HR_BP', 'ROLE_TALENT_ACQUISITION','ROLE_ADMIN') or @securityUtil.isHrUser()")
     public ResponseEntity<EmployeeCreateResponse> createEmployee(
             @RequestBody EmployeeDTO dto) {
->>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
 
         String hrUsername = SecurityContextHolder
                 .getContext()
@@ -72,15 +48,6 @@ public class HrEmployeeController {
         User hrUser = userRepository.findByUsername(hrUsername)
                 .orElseThrow(() -> new RuntimeException("HR not found"));
 
-<<<<<<< HEAD
-        EmployeeCreateResponse response =
-                onboardingService.createEmployee(dto, hrUser);
-
-        return ResponseEntity.ok(response);
-    }
-
-
-=======
         //  Save Employee
         Employee employee = employeeService.toEntity(dto, hrUser.getId());
         EmployeeDTO savedEmployee = employeeService.addEmployee(employee);
@@ -122,6 +89,6 @@ public class HrEmployeeController {
         );
     }
 
->>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
 }
+
 

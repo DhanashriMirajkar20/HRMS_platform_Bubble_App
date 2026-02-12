@@ -1,10 +1,6 @@
 package com.example.EmployeeManagement.Model;
 
 
-<<<<<<< HEAD
-import com.example.EmployeeManagement.audit.entity.AuditableEntity;
-=======
->>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -17,24 +13,6 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "job_details")
-<<<<<<< HEAD
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-@Getter
-@Setter
-@EqualsAndHashCode(
-        onlyExplicitlyIncluded = true,
-        callSuper = false
-)
-//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "jobId")
-
-public class JobDetails extends AuditableEntity {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @EqualsAndHashCode.Include
-=======
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -45,7 +23,6 @@ public class JobDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
->>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
     private Long jobId;
 
     // FK → employee.employee_id (Phase-1: keep flat)
@@ -68,4 +45,5 @@ public class JobDetails {
     @JoinColumn(name = "employee_id" , unique = true)
     private Employee employee;
 }
+
 
