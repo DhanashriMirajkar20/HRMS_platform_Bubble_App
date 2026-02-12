@@ -63,6 +63,9 @@ public class AuthController {
      */
     @GetMapping("/me")
     public ResponseEntity<UserProfileResponse> me(Principal principal) {
+        if (principal == null || principal.getName() == null) {
+            return ResponseEntity.status(401).build();
+        }
         User user = userRepository.findByUsername(principal.getName())
                 .orElseThrow(() -> new BadCredentialsException("User not found"));
 
@@ -122,4 +125,3 @@ public class AuthController {
     }
 
 }
-

@@ -57,6 +57,10 @@ export const AppStateProvider = ({ children }) => {
   );
 
   const refreshProfile = useCallback(async () => {
+    if (!isAuthenticated) {
+      setProfile(null);
+      return;
+    }
     setProfileLoading(true);
     try {
       const meResponse = await axiosInstance.get(API_ENDPOINTS.AUTH.ME);
@@ -80,7 +84,7 @@ export const AppStateProvider = ({ children }) => {
     } finally {
       setProfileLoading(false);
     }
-  }, [user]);
+  }, [user, isAuthenticated]);
 
   const refreshProfileData = useCallback(async () => {
     if (role !== 'EMPLOYEE') return;
@@ -242,8 +246,13 @@ export const AppStateProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    refreshProfile();
-  }, [refreshProfile]);
+    if (isAuthenticated) {
+      refreshProfile();
+    } else {
+      setProfile(null);
+      setProfileLoading(false);
+    }
+  }, [refreshProfile, isAuthenticated]);
 
   useEffect(() => {
     if (accountInfo.employeeId) {
