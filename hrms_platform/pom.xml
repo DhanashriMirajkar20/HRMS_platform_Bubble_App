@@ -19,15 +19,10 @@
 
     <properties>
         <java.version>21</java.version>
-<<<<<<< HEAD
-=======
-        <lombok.version>1.18.42</lombok.version>
->>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
     </properties>
 
     <dependencies>
 
-<<<<<<< HEAD
         <dependency>
             <groupId>io.github.cdimascio</groupId>
             <artifactId>dotenv-java</artifactId>
@@ -35,8 +30,6 @@
         </dependency>
 
 
-=======
->>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
         <!--aws-->
 
         <dependency>
@@ -82,10 +75,6 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-<<<<<<< HEAD
-=======
-            <version>${lombok.version}</version>
->>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
             <scope>provided</scope>
         </dependency>
 
@@ -122,7 +111,6 @@
         </dependency>
 
 
-<<<<<<< HEAD
         <!-- OAuth2 Client -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -130,14 +118,13 @@
         </dependency>
 
 
-=======
->>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
         <!-- Tests -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
 
     </dependencies>
 
@@ -151,16 +138,6 @@
                 <configuration>
                     <release>21</release>
                     <parameters>true</parameters>
-<<<<<<< HEAD
-=======
-                    <annotationProcessorPaths>
-                        <path>
-                            <groupId>org.projectlombok</groupId>
-                            <artifactId>lombok</artifactId>
-                            <version>${lombok.version}</version>
-                        </path>
-                    </annotationProcessorPaths>
->>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
                 </configuration>
             </plugin>
 
