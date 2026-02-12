@@ -1,10 +1,7 @@
 package com.example.hrms_platform_document.service;
 
 import com.example.EmployeeManagement.Model.Employee;
-<<<<<<< HEAD
-=======
 import com.example.EmployeeManagement.Repository.EmployeeRepository;
->>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
 import com.example.hrms_platform_document.entity.Document;
 import com.example.hrms_platform_document.entity.DocumentVersion;
 import com.example.hrms_platform_document.enums.DocumentAuditAction;
@@ -14,65 +11,44 @@ import com.example.hrms_platform_document.exception.InvalidDocumentStateExceptio
 import com.example.hrms_platform_document.repository.DocumentRepository;
 import com.example.hrms_platform_document.repository.DocumentVersionRepository;
 import com.example.hrms_platform_document.service.storage.StorageService;
-<<<<<<< HEAD
-import lombok.Data;
-=======
 import com.example.security.util.SecurityUtil;
 import lombok.Data;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
->>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 
-<<<<<<< HEAD
-import java.util.List;
-import java.util.UUID;
-=======
 import java.util.UUID;
 import java.util.List;
->>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
 @Data
 @Service
 public class DocumentService {
 
-<<<<<<< HEAD
-=======
     private static final Logger logger = LoggerFactory.getLogger(DocumentService.class);
 
->>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
     private final DocumentRepository documentRepository;
     private final DocumentVersionRepository versionRepository;
     private final StorageService storageService;
     private final DocumentAuditService auditService;
-<<<<<<< HEAD
-=======
     private final DocumentAccessLogService accessLogService;
     private final EmployeeRepository employeeRepository;
     private final SecurityUtil securityUtil;
->>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
 
     public DocumentService(
             DocumentRepository documentRepository,
             DocumentVersionRepository versionRepository,
             StorageService storageService,
-<<<<<<< HEAD
-            DocumentAuditService auditService
-=======
             DocumentAuditService auditService,
             DocumentAccessLogService accessLogService,
             EmployeeRepository employeeRepository,
             SecurityUtil securityUtil
->>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
     ) {
         this.documentRepository = documentRepository;
         this.versionRepository = versionRepository;
         this.storageService = storageService;
         this.auditService = auditService;
-<<<<<<< HEAD
-=======
         this.accessLogService = accessLogService;
         this.employeeRepository = employeeRepository;
         this.securityUtil = securityUtil;
@@ -93,7 +69,6 @@ public class DocumentService {
             boolean isConfidential
     ) {
         return uploadDocument(getCurrentEmployee(), file, documentType, documentName, isConfidential);
->>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
     }
 
     /**
@@ -108,11 +83,6 @@ public class DocumentService {
             boolean isConfidential
     ) {
 
-<<<<<<< HEAD
-        System.out.println("Too Before");
-
-=======
->>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
         // 1️⃣ Create Document (logical)
         Document document = new Document();
         document.setEmployee(owner);
@@ -125,11 +95,6 @@ public class DocumentService {
         document = documentRepository.save(document);
 
         // 2️⃣ Create S3 key (STAGING)
-<<<<<<< HEAD
-        System.out.println("Before");
-        System.out.println(owner.getEmployeeId());
-=======
->>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
         String s3Key = buildStagingKey(owner.getEmployeeId(), document.getDocumentId());
 
         // 3️⃣ Upload to S3
@@ -222,8 +187,6 @@ public class DocumentService {
         return document;
     }
 
-<<<<<<< HEAD
-=======
     /**
      * Re-upload document (logged-in employee, owner only)
      */
@@ -240,20 +203,12 @@ public class DocumentService {
         return reuploadDocument(documentId, currentEmployee, file);
     }
 
->>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
     @Transactional(readOnly = true)
     public Document getDocumentById(Long documentId) {
         return documentRepository.findById(documentId)
                 .orElseThrow(() -> new DocumentNotFoundException(documentId));
     }
 
-<<<<<<< HEAD
-    @Transactional(readOnly = true)
-    public List<Document> getDocumentsForCurrentEmployee(Employee employee) {
-        return documentRepository.findByEmployee(employee);
-    }
-
-=======
     /**
      * Download (owner only, verified only)
      */
@@ -439,6 +394,6 @@ public class DocumentService {
         }
         return deptA.trim().equalsIgnoreCase(deptB.trim());
     }
->>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
 
 }
+

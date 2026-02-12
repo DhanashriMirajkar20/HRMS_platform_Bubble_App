@@ -86,7 +86,20 @@ public class OnboardingService {
         User user = userService.registerNewUser(registerRequest);
 
         // 3️⃣ Create EMPLOYEE (❗ DO NOT set employeeId)
-        Employee employee = employeeService.toEntity(dto, hrUser.getId());
+        EmployeeDTO employeeDTO = new EmployeeDTO();
+        employeeDTO.setFirstName(dto.getFirstName());
+        employeeDTO.setLastName(dto.getLastName());
+        employeeDTO.setDepartment(dto.getDepartment());
+        employeeDTO.setDesignation(dto.getDesignation());
+        employeeDTO.setEmployeeType(dto.getEmployeeType());
+        employeeDTO.setDateOfJoining(dto.getDateOfJoining());
+        employeeDTO.setCurrentBand(dto.getCurrentBand());
+        employeeDTO.setCurrentExperience(dto.getCurrentExperience());
+        employeeDTO.setCtc(dto.getCtc());
+        employeeDTO.setPhoneNumber(dto.getPhoneNumber());
+        employeeDTO.setPersonalEmail(dto.getPersonalEmail());
+
+        Employee employee = employeeService.toEntity(employeeDTO, hrUser.getId());
         employee.setCompanyEmail(companyEmail);
         employee.setCreatedAt(LocalDateTime.now());
 
@@ -95,14 +108,13 @@ public class OnboardingService {
 
         // 5️⃣ Link USER ↔ EMPLOYEE
         user.setEmployeeId(savedEmployee.getEmployeeId());
-        user.setEmployee(savedEmployee);
         savedEmployee.setUser(user);
 
         // 6️⃣ Persist updated user
         userService.save(user);
 
         // 7️⃣ Send credentials email
-        emailService.sendCredentials(
+        emailService.sendEmployeeOnboardingEmail(
                 dto.getPersonalEmail(),
                 companyEmail,
                 tempPassword

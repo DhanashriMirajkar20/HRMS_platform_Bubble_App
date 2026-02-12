@@ -10,11 +10,9 @@ import java.util.Optional;
 public interface DocumentVersionRepository extends JpaRepository<DocumentVersion, Long> {
 
     Optional<DocumentVersion> findTopByDocumentDocumentIdOrderByVersionNumberDesc(Long documentId);
-<<<<<<< HEAD
-=======
 
     void deleteByDocumentDocumentId(Long documentId);
 
     void deleteByUploadedByEmployeeId(Long employeeId);
->>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
 }
+

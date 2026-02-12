@@ -35,16 +35,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         String path = request.getRequestURI();
 
-<<<<<<< HEAD
-        // ✅ Skip JWT only for truly PUBLIC endpoints
-        if (path.equals("/api/v1/auth/login")
-                || path.equals("/api/v1/auth/forgot-password")
-                || path.equals("/api/v1/auth/reset-password")) {
-
-=======
         // 🔓 SKIP JWT FILTER FOR PUBLIC AUTH ENDPOINTS
         if (path.startsWith("/api/v1/auth/") && !path.equals("/api/v1/auth/me")) {
->>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
             filterChain.doFilter(request, response);
             return;
         }
@@ -53,19 +45,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String jwt = null;
         String username = null;
 
-<<<<<<< HEAD
-        // ✅ Extract JWT
-=======
->>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             jwt = authHeader.substring(7);
             username = jwtService.extractUsername(jwt);
         }
 
-<<<<<<< HEAD
-        // ✅ Authenticate user using JWT
-=======
->>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
         if (username != null &&
                 SecurityContextHolder.getContext().getAuthentication() == null) {
 
@@ -88,31 +72,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
                 SecurityContextHolder.getContext()
                         .setAuthentication(authToken);
-<<<<<<< HEAD
-
-                // 🔒 Enforce first-login password change rule
-                if (userDetails instanceof User user) {
-
-                    if (user.isMustChangePassword()
-                            && !path.equals("/api/v1/auth/me/password")) {
-
-                        response.sendError(
-                                HttpServletResponse.SC_FORBIDDEN,
-                                "Password change required"
-                        );
-                        return;
-                    }
-                }
-=======
->>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
             }
         }
 
         filterChain.doFilter(request, response);
     }
-<<<<<<< HEAD
-=======
 
 
->>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
 }
+

@@ -3,18 +3,18 @@ package com.example.security.oauth;
 import com.example.security.jwt.JwtService;
 import com.example.security.model.User;
 import com.example.security.repository.UserRepository;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 @Component
 @RequiredArgsConstructor
@@ -24,6 +24,9 @@ public class OAuth2AuthenticationSuccessHandler
     private final UserRepository userRepository;
     private final JwtService jwtService;
 
+    @Value("${app.frontend.url:http://localhost:5173}")
+    private String frontendUrl;
+
     @Override
     public void onAuthenticationSuccess(
             HttpServletRequest request,
@@ -32,29 +35,26 @@ public class OAuth2AuthenticationSuccessHandler
     ) throws IOException {
 
         OAuth2User oauthUser = (OAuth2User) authentication.getPrincipal();
-//        assert oauthUser != null;
         String email = oauthUser.getAttribute("email");
 
-        User user = userRepository.findByUsername(email)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-
-        String token = jwtService.generateToken(user);
-
-        // Store token somewhere frontend can access (cookie or header-based redirect)
-        // If you already do this for username/password, reuse SAME mechanism
-
-        String redirectUrl;
-
-        if (user.hasRole("ROLE_ADMIN")) {
-            redirectUrl = "/admin/dashboard";
-        } else if (user.hasRole("ROLE_HR")) {
-            redirectUrl = "/hr/dashboard";
-        } else {
-            redirectUrl = "/employee/dashboard";
+        if (email == null || email.isBlank()) {
+            redirectToError(response, "missing_email");
+            return;
         }
 
+        User user = userRepository.findByUsername(email).orElse(null);
+        if (user == null) {
+            redirectToError(response, "not_registered");
+            return;
+        }
 
-        response.sendRedirect(redirectUrl);
+        String token = jwtService.generateToken(user);
+        String encodedToken = URLEncoder.encode(token, StandardCharsets.UTF_8);
+        response.sendRedirect(frontendUrl + "/oauth/redirect?token=" + encodedToken);
     }
 
+    private void redirectToError(HttpServletResponse response, String reason) throws IOException {
+        String encodedReason = URLEncoder.encode(reason, StandardCharsets.UTF_8);
+        response.sendRedirect(frontendUrl + "/oauth/error?reason=" + encodedReason);
+    }
 }

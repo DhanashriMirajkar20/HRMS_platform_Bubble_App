@@ -1,6 +1,7 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import { API_AUTH_BASE_URL } from "../../config/api";
 import {
   FaUser,
   FaLock,
@@ -15,6 +16,7 @@ import {
 
 export default function Login() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { login } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
@@ -26,6 +28,20 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const error = params.get("error");
+    if (!error) return;
+    const messageByReason = {
+      missing_email: "Your Google account did not provide an email address.",
+      not_registered: "This email is not registered. Please contact Admin or HR.",
+      missing_token: "OAuth token was not received. Please try again.",
+      oauth_failed: "OAuth login failed. Please try again.",
+      oauth_failure: "OAuth login failed. Please try again.",
+    };
+    setErrorMessage(messageByReason[error] || "Login failed. Please try again.");
+  }, [location.search]);
 
   const validateForm = () => {
     const newErrors = {};
@@ -99,7 +115,9 @@ export default function Login() {
     }
   };
 
-  const handleGoogleLogin = () => console.log("Google login clicked");
+  const handleGoogleLogin = () => {
+    window.location.href = `${API_AUTH_BASE_URL}/oauth2/authorization/google`;
+  };
   const handleLinkedInLogin = () => console.log("LinkedIn login clicked");
 
   const handleForgotPassword = (e) => {

@@ -1,9 +1,5 @@
 package com.example.security.model;
 
-<<<<<<< HEAD
-import com.example.EmployeeManagement.Model.Employee;
-=======
->>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -33,21 +29,9 @@ public class User {
     private boolean enabled = true;
 
     // Link to employee (ownership checks)
-<<<<<<< HEAD
-    @Column(unique = true)
-    private Long employeeId;
-
-
-
-    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
-    private Employee employee;
-
-
-=======
     @Column(name = "employee_id")
     private Long employeeId;
 
->>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
     // EMPLOYEE + optional ONE HR role
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -64,11 +48,7 @@ public class User {
     private LocalDateTime updatedAt;
 
     @Column(name = "must_change_password")
-<<<<<<< HEAD
-    private boolean mustChangePassword = false;
-=======
     private Boolean mustChangePassword = false;
->>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
 
     @Column(name = "reset_token")
     private String resetToken;
@@ -86,15 +66,8 @@ public class User {
         this.updatedAt = LocalDateTime.now();
     }
 
-<<<<<<< HEAD
-    public boolean hasRole(String roleName) {
-        return roles != null && roles.stream()
-                .anyMatch(role -> roleName.equalsIgnoreCase(role.getName()));
-    }
-
-=======
     public boolean isMustChangePassword() {
         return Boolean.TRUE.equals(mustChangePassword);
     }
->>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
 }
+

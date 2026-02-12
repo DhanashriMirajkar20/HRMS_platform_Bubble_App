@@ -1,13 +1,8 @@
 package com.example.EmployeeManagement.Controller;
 
 import com.example.EmployeeManagement.DTO.AuditLogDTO;
-<<<<<<< HEAD
-import com.example.EmployeeManagement.Service.AuditLogService;
-import com.example.EmployeeManagement.audit.entity.AuditLog;
-=======
 import com.example.EmployeeManagement.Model.AuditLog;
 import com.example.EmployeeManagement.Service.AuditLogService;
->>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -68,3 +63,4 @@ public class AuditLogController {
         );
     }
 }
+

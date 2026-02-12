@@ -24,10 +24,6 @@ public class DocumentGlobalExceptionHandler {
                 .body(error(ex.getMessage(), HttpStatus.BAD_REQUEST));
     }
 
-<<<<<<< HEAD
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<?> handleGeneric(Exception ex) {
-=======
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<?> handleRuntime(RuntimeException ex) {
         ex.printStackTrace();
@@ -38,7 +34,6 @@ public class DocumentGlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> handleGeneric(Exception ex) {
         ex.printStackTrace();
->>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(error("Internal server error", HttpStatus.INTERNAL_SERVER_ERROR));
     }
@@ -51,3 +46,4 @@ public class DocumentGlobalExceptionHandler {
         );
     }
 }
+

@@ -19,10 +19,7 @@ public class LeaveRequestMapper {
 
     public static LeaveRequestDTO toDTO(LeaveRequest entity) {
         LeaveRequestDTO dto = new LeaveRequestDTO();
-<<<<<<< HEAD
-=======
         dto.setLeaveRequestId(entity.getLeaveRequestId());
->>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
         if (entity.getEmployee() != null) {
             dto.setEmployeeId(entity.getEmployee().getEmployeeId());
         }
@@ -30,10 +27,8 @@ public class LeaveRequestMapper {
         dto.setFromDate(entity.getFromDate());
         dto.setToDate(entity.getToDate());
         dto.setTotalDays(entity.getTotalDays());
-<<<<<<< HEAD
-=======
         dto.setStatus(entity.getStatus());
->>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
         return dto;
     }
 }
+

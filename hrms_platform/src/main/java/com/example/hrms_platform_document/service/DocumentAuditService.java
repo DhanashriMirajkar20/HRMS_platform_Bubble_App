@@ -33,8 +33,6 @@ public class DocumentAuditService {
 
         auditRepository.save(audit);
     }
-<<<<<<< HEAD
-=======
 
     public void deleteByDocumentId(Long documentId) {
         auditRepository.deleteByDocumentDocumentId(documentId);
@@ -52,6 +50,6 @@ public class DocumentAuditService {
                 .map(DocumentAudit::getRemarks)
                 .orElse(null);
     }
->>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
 }
+
 

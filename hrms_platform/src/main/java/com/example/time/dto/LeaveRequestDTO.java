@@ -13,18 +13,13 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class LeaveRequestDTO {
 
-<<<<<<< HEAD
-=======
     private Long leaveRequestId;
->>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
     private long employeeId;
     private long leaveTypeId;
     private LocalDate fromDate;
     private LocalDate toDate;
     private int totalDays;
-<<<<<<< HEAD
-=======
     private String status;
->>>>>>> 985c4a38cd5976c42713aa6a5f975a1278287d1b
 
 }
+
