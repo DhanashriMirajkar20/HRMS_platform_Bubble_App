@@ -2,6 +2,7 @@ package com.example.EmployeeManagement.Controller;
 
 
 import com.example.EmployeeManagement.DTO.EmployeeSearchDTO;
+import com.example.EmployeeManagement.DTO.EmployeeSearchRequestDTO;
 import com.example.EmployeeManagement.Service.EmployeeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,12 +19,10 @@ public class EmployeeSearchController {
 
     @PostMapping("/search")
     public ResponseEntity<List<EmployeeSearchDTO>> searchEmployees(
-            @RequestBody EmployeeSearchDTO searchDTO) {
+            @RequestBody EmployeeSearchRequestDTO request) {
 
-        List<EmployeeSearchDTO> result =
-                employeeService.searchEmployees(searchDTO);
-
-        return ResponseEntity.ok(result);
+        return ResponseEntity.ok(employeeService.searchEmployees(request));
     }
+
 }
 

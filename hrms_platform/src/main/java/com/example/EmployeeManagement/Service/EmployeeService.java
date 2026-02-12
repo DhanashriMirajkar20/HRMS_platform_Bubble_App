@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.example.EmployeeManagement.DTO.EmployeeSearchDTO;
+import com.example.EmployeeManagement.DTO.EmployeeSearchRequestDTO;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -358,46 +359,27 @@ public class EmployeeService {
         return deptA.trim().equalsIgnoreCase(deptB.trim());
     }
 
-    public List<EmployeeSearchDTO> searchEmployees(EmployeeSearchDTO searchDTO) {
+    public List<EmployeeSearchDTO> searchEmployees(EmployeeSearchRequestDTO request) {
 
-        Specification<Employee> specification = (root, query, cb) -> {
+        List<Employee> employees;
 
-            List<Predicate> predicates = new ArrayList<>();
-
-            if (searchDTO.getFirstName() != null) {
-                predicates.add(cb.like(cb.lower(root.get("firstName")),
-                        "%" + searchDTO.getFirstName().toLowerCase() + "%"));
-            }
-
-            if (searchDTO.getLastName() != null) {
-                predicates.add(cb.like(cb.lower(root.get("lastName")),
-                        "%" + searchDTO.getLastName().toLowerCase() + "%"));
-            }
-
-            if (searchDTO.getCompanyEmail() != null) {
-                predicates.add(cb.equal(root.get("companyEmail"),
-                        searchDTO.getCompanyEmail()));
-            }
-
-            if (searchDTO.getDepartment() != null) {
-                predicates.add(cb.equal(root.get("department"),
-                        searchDTO.getDepartment()));
-            }
-
-            if (searchDTO.getDesignation() != null) {
-                predicates.add(cb.equal(root.get("designation"),
-                        searchDTO.getDesignation()));
-            }
-
-            return cb.and(predicates.toArray(new Predicate[0]));
-        };
-
-        List<Employee> employees = employeeRepository.findAll(specification);
+        if (request.getName() != null && !request.getName().isBlank()) {
+            employees = employeeRepository.searchByFullName(request.getName());
+        } else {
+            employees = employeeRepository.findAll();
+        }
 
         return employees.stream()
+                .filter(e -> request.getDepartment() == null ||
+                        e.getDepartment().equalsIgnoreCase(request.getDepartment()))
+                .filter(e -> request.getDesignation() == null ||
+                        e.getDesignation().equalsIgnoreCase(request.getDesignation()))
+                .filter(e -> request.getBand() == null ||
+                        e.getCurrentBand().equalsIgnoreCase(request.getBand()))
                 .map(this::convertToSearchDTO)
                 .toList();
     }
+
 
     private EmployeeSearchDTO convertToSearchDTO(Employee employee) {
 
@@ -413,6 +395,7 @@ public class EmployeeService {
         dto.setBand(employee.getCurrentBand());
 
         if (employee.getManager() != null) {
+
             dto.setManagerName(
                     employee.getManager().getFirstName() + " " +
                             employee.getManager().getLastName()
@@ -428,5 +411,6 @@ public class EmployeeService {
 
         return dto;
     }
+
 
 }

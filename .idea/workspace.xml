@@ -5,12 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b8c04677-5ec0-4006-a044-982a58535b60" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/hrms_platform/src/main/java/com/example/EmployeeManagement/DTO/EmployeeSearchDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hrms_platform/src/main/java/com/example/EmployeeManagement/Model/Employee.java" beforeDir="false" afterPath="$PROJECT_DIR$/hrms_platform/src/main/java/com/example/EmployeeManagement/Model/Employee.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hrms_platform/src/main/java/com/example/EmployeeManagement/Repository/EmployeeRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/hrms_platform/src/main/java/com/example/EmployeeManagement/Repository/EmployeeRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hrms_platform/src/main/java/com/example/EmployeeManagement/Controller/EmployeeSearchController.java" beforeDir="false" afterPath="$PROJECT_DIR$/hrms_platform/src/main/java/com/example/EmployeeManagement/Controller/EmployeeSearchController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hrms_platform/src/main/java/com/example/EmployeeManagement/Service/EmployeeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/hrms_platform/src/main/java/com/example/EmployeeManagement/Service/EmployeeService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hrms_platform/src/main/java/com/example/security/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/hrms_platform/src/main/java/com/example/security/config/SecurityConfig.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
