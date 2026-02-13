@@ -3,6 +3,9 @@ package com.example.EmployeeManagement.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.EmployeeManagement.DTO.EmployeeSearchDTO;
+import com.example.EmployeeManagement.DTO.EmployeeSearchRequestDTO;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import com.example.EmployeeManagement.DTO.EmployeeDTO;
@@ -30,6 +33,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Objects;
 import java.util.Set;
+import jakarta.persistence.criteria.Predicate;
 import java.util.stream.Collectors;
 
 @Service
@@ -355,6 +359,58 @@ public class EmployeeService {
         return deptA.trim().equalsIgnoreCase(deptB.trim());
     }
 
+    public List<EmployeeSearchDTO> searchEmployees(EmployeeSearchRequestDTO request) {
+
+        List<Employee> employees;
+
+        if (request.getName() != null && !request.getName().isBlank()) {
+            employees = employeeRepository.searchByFullName(request.getName());
+        } else {
+            employees = employeeRepository.findAll();
+        }
+
+        return employees.stream()
+                .filter(e -> request.getDepartment() == null ||
+                        e.getDepartment().equalsIgnoreCase(request.getDepartment()))
+                .filter(e -> request.getDesignation() == null ||
+                        e.getDesignation().equalsIgnoreCase(request.getDesignation()))
+                .filter(e -> request.getBand() == null ||
+                        e.getCurrentBand().equalsIgnoreCase(request.getBand()))
+                .map(this::convertToSearchDTO)
+                .toList();
+    }
+
+
+    private EmployeeSearchDTO convertToSearchDTO(Employee employee) {
+
+        EmployeeSearchDTO dto = new EmployeeSearchDTO();
+
+        dto.setEmployeeId(employee.getEmployeeId());
+        dto.setFirstName(employee.getFirstName());
+        dto.setLastName(employee.getLastName());
+        dto.setCompanyEmail(employee.getCompanyEmail());
+        dto.setDesignation(employee.getDesignation());
+        dto.setDepartment(employee.getDepartment());
+        dto.setCompanyBaseLocation(employee.getCompanyBaseLocation());
+        dto.setBand(employee.getCurrentBand());
+
+        if (employee.getManager() != null) {
+
+            dto.setManagerName(
+                    employee.getManager().getFirstName() + " " +
+                            employee.getManager().getLastName()
+            );
+
+            EmployeeDTO managerDTO = new EmployeeDTO();
+            managerDTO.setEmployeeId(employee.getManager().getEmployeeId());
+            managerDTO.setFirstName(employee.getManager().getFirstName());
+            managerDTO.setLastName(employee.getManager().getLastName());
+
+            dto.setManager(managerDTO);
+        }
+
+        return dto;
+    }
 
 
 }
